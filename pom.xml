@@ -7,25 +7,13 @@
 
     <properties>
         <java.version>11</java.version>
-        <sonar.plugin.api.version>9.14.0.375</sonar.plugin.api.version> <!-- Versión conocida compatible -->
+        <sonar.plugin.api.version>11.3.0.2824</sonar.plugin.api.version> <!-- Última versión de Maven Central -->
         <antlr.version>4.13.0</antlr.version>
     </properties>
 
-    <!-- Repositorios -->
-    <repositories>
-        <repository>
-            <id>sonarsource</id>
-            <url>https://repox.jfrog.io/artifactory/sonarsource</url> <!-- Repositorio actualizado de SonarSource -->
-        </repository>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
+            <groupId>org.sonarsource.api.plugin</groupId>
             <artifactId>sonar-plugin-api</artifactId>
             <version>${sonar.plugin.api.version}</version>
             <scope>provided</scope>
@@ -47,7 +35,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId> <!-- Cambiado a sonarsource.sonarqube -->
+            <groupId>org.sonarsource.sonarqube</groupId>
             <artifactId>sonar-plugin-api-test-fixtures</artifactId>
             <version>${sonar.plugin.api.version}</version>
             <scope>test</scope>
