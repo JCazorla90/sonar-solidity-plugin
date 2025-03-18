@@ -3,36 +3,13 @@
     <groupId>org.sonarsource.solidity</groupId>
     <artifactId>sonar-solidity-plugin</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <packaging>sonar-plugin</packaging>
+    <packaging>jar</packaging> <!-- Cambiamos a jar -->
 
     <properties>
         <java.version>11</java.version>
         <sonar.plugin.api.version>10.0</sonar.plugin.api.version>
         <antlr.version>4.13.0</antlr.version>
     </properties>
-
-    <!-- Repositorio de SonarSource -->
-    <repositories>
-        <repository>
-            <id>sonarsource</id>
-            <url>https://repox.sonarsource.com/sonarsource-public-releases</url>
-        </repository>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>sonarsource</id>
-            <url>https://repox.sonarsource.com/sonarsource-public-releases</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -67,17 +44,7 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-                <artifactId>sonar-packaging-maven-plugin</artifactId>
-                <version>1.21.0</version> <!-- Versión más reciente conocida -->
-                <extensions>true</extensions>
-                <configuration>
-                    <pluginKey>solidity</pluginKey>
-                    <pluginName>Solidity</pluginName>
-                    <pluginClass>org.sonarsource.solidity.SolidityPlugin</pluginClass>
-                </configuration>
-            </plugin>
+            <!-- Plugin ANTLR -->
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
@@ -90,7 +57,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Configurar el compilador para Java 11 -->
+        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -98,6 +65,22 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+   
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Plugin-Key>solidity</Plugin-Key>
+                            <Plugin-Name>Solidity</Plugin-Name>
+                            <Plugin-Class>org.sonarsource.solidity.SolidityPlugin</Plugin-Class>
+                            <Plugin-Version>${project.version}</Plugin-Version>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
