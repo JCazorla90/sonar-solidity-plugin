@@ -7,7 +7,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <sonar.plugin.api.version>11.3.0.2824</sonar.plugin.api.version> <!-- Última versión de Maven Central -->
+        <sonar.plugin.api.version>11.3.0.2824</sonar.plugin.api.version>
         <antlr.version>4.13.0</antlr.version>
     </properties>
 
@@ -34,12 +34,7 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
-            <artifactId>sonar-plugin-api-test-fixtures</artifactId>
-            <version>${sonar.plugin.api.version}</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- Eliminada sonar-plugin-api-test-fixtures -->
     </dependencies>
 
     <build>
