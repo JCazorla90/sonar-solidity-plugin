@@ -3,13 +3,25 @@
     <groupId>org.sonarsource.solidity</groupId>
     <artifactId>sonar-solidity-plugin</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging> <!-- Cambiamos a jar -->
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>11</java.version>
-        <sonar.plugin.api.version>10.0</sonar.plugin.api.version>
+        <sonar.plugin.api.version>9.14.0.375</sonar.plugin.api.version> <!-- Versión conocida compatible -->
         <antlr.version>4.13.0</antlr.version>
     </properties>
+
+    <!-- Repositorios -->
+    <repositories>
+        <repository>
+            <id>sonarsource</id>
+            <url>https://repox.jfrog.io/artifactory/sonarsource</url> <!-- Repositorio actualizado de SonarSource -->
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -35,16 +47,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.sonar.api</groupId>
+            <groupId>org.sonarsource.sonarqube</groupId> <!-- Cambiado a sonarsource.sonarqube -->
             <artifactId>sonar-plugin-api-test-fixtures</artifactId>
-            <version>10.0</version>
+            <version>${sonar.plugin.api.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Plugin ANTLR -->
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
@@ -57,7 +68,6 @@
                     </execution>
                 </executions>
             </plugin>
-        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -67,7 +77,6 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-   
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
