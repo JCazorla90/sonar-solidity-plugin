@@ -11,6 +11,29 @@
         <antlr.version>4.13.0</antlr.version>
     </properties>
 
+    <!-- Repositorio de SonarSource -->
+    <repositories>
+        <repository>
+            <id>sonarsource</id>
+            <url>https://repox.sonarsource.com/sonarsource-public-releases</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonarsource</id>
+            <url>https://repox.sonarsource.com/sonarsource-public-releases</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.sonarsource.sonarqube</groupId>
@@ -47,7 +70,7 @@
             <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
-                <version>1.20.0</version>
+                <version>1.21.0</version> <!-- Versión más reciente conocida -->
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>solidity</pluginKey>
@@ -66,6 +89,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Configurar el compilador para Java 11 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
