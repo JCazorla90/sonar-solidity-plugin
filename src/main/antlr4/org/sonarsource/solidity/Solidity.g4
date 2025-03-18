@@ -5,12 +5,12 @@ sourceUnit: (pragmaDirective | importDirective | contractDefinition)* EOF;
 pragmaDirective: 'pragma' 'solidity' versionRange ';';
 versionRange: versionLiteral | versionLiteral '+' | versionLiteral '^';
 
-contractDefinition: 'contract' identifier '{' contractBody '}';
+contractDefinition: 'contract' Identifier '{' contractBody '}';
 contractBody: (functionDefinition | stateVariableDeclaration)*;
 
-functionDefinition: 'function' identifier '(' parameterList? ')' (modifierList)? (returns '(' returnParameters ')')? block;
+functionDefinition: 'function' Identifier '(' parameterList? ')' (modifierList)? (returns '(' returnParameters ')')? block;
 parameterList: parameter (',' parameter)*;
-parameter: typeName identifier?;
+parameter: typeName Identifier?;
 typeName: elementaryTypeName | userDefinedTypeName;
 elementaryTypeName: 'address' | 'bool' | 'uint256' | 'bytes32' | 'string';
 block: '{' statement* '}';
@@ -19,9 +19,18 @@ uncheckedBlock: 'unchecked' block;
 
 expressionStatement: expression ';';
 expression: primaryExpression | expression ('+' | '-') expression;
-primaryExpression: identifier | literal;
+primaryExpression: Identifier | literal;
 
-identifier: [a-zA-Z_][a-zA-Z0-9_]*;
-literal: NumberLiteral | StringLiteral;
+modifierList: ('public' | 'private' | 'internal' | 'external')*; // Ejemplo básico
+returnParameters: parameterList;
+stateVariableDeclaration: typeName Identifier ';'; // Ejemplo básico
+importDirective: 'import' StringLiteral ';'; // Ejemplo básico
+ifStatement: 'if' '(' expression ')' statement; // Ejemplo básico
+
+// Tokens (lexer rules)
+Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 NumberLiteral: [0-9]+;
 StringLiteral: '"' .*? '"';
+versionLiteral: [0-9]+ '.' [0-9]+ '.' [0-9]+;
+
+WS: [ \t\r\n]+ -> skip; // Ignorar espacios en blanco
