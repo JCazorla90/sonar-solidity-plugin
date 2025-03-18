@@ -34,13 +34,21 @@ jobs:
           name: sonar-solidity-updated
           path: sonar-solidity-updated.zip
 
-      - name: Create Release and Upload ZIP
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-solidity-plugin
+          path: target/sonar-solidity-plugin-2.0.0-SNAPSHOT.jar
+
+      - name: Create Release and Upload Assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ github.run_number }}"
           name: "Release v${{ github.run_number }}"
           body: "Automated release of sonar-solidity-updated"
-          files: sonar-solidity-updated.zip
+          files: |
+            sonar-solidity-updated.zip
+            target/sonar-solidity-plugin-2.0.0-SNAPSHOT.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
