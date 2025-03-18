@@ -3,52 +3,35 @@ name: Build and Release Sonar Solidity Plugin
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Se ejecuta solo en push a main
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Clonar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Configurar Java 11
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
 
+      # 3. Compilar y empaquetar con Maven
       - name: Build with Maven
         run: mvn clean test package -B
 
-      - name: Create ZIP of source code
-        run: zip -r sonar-solidity-updated.zip . -x "*.git*"
-
-      - name: Upload ZIP as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sonar-solidity-updated
-          path: sonar-solidity-updated.zip
-
-      - name: Upload JAR as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sonar-solidity-plugin
-          path: target/sonar-solidity-plugin-2.0.0-SNAPSHOT.jar
-
-      - name: Create Release and Upload Assets
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      # 4. Crear un Release y subir el JAR
+      - name: Create Release and Upload JAR
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ github.run_number }}"
           name: "Release v${{ github.run_number }}"
-          body: "Automated release of sonar-solidity-updated"
-          files: |
-            sonar-solidity-updated.zip
-            target/sonar-solidity-plugin-2.0.0-SNAPSHOT.jar
+          body: "Automated release of sonar-solidity-plugin JAR"
+          files: target/sonar-solidity-plugin-2.0.0-SNAPSHOT.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
